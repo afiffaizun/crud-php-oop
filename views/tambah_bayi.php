@@ -1,6 +1,6 @@
 <?php
 require_once '../config/Database.php';
-require_once '../models/Model.php';
+require_once '../models/balita.php';
 session_start();
 
 // Auth check (optional, hapus jika tidak ingin login)
@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $bayiModel = new BayiModel();
+    $bayiModel = new Bayi();
     $bayiModel->setNama($_POST['nama']);
     $bayiModel->setTinggi($_POST['tinggi']);
     $bayiModel->setBerat($_POST['berat']);

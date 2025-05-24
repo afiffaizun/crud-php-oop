@@ -1,6 +1,6 @@
 <?php
 require_once '../config/Database.php';
-require_once '../models/Model.php';
+require_once '../models/balita.php';
 session_start();
 
 // Auth check
@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$bayiModel = new BayiModel();
+$bayiModel = new Bayi();
 $alert = null;
 
 // Ambil data bayi untuk edit

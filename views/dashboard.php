@@ -1,6 +1,6 @@
 <?php
 require_once '../config/Database.php';
-require_once '../models/Model.php';
+require_once '../models/balita.php';
 session_start();
 
 // Auth check (optional, hapus jika tidak ingin login)
@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 // Proses hapus data
 if (isset($_GET['hapus'])) {
     $id = (int)$_GET['hapus'];
-    $bayiModel = new BayiModel();
+    $bayiModel = new Bayi();
     if ($bayiModel->hapus($id)) {
         echo "<script>alert('Data bayi berhasil dihapus');window.location='dashboard.php';</script>";
         exit;
@@ -24,7 +24,7 @@ if (isset($_GET['hapus'])) {
 
 // Proses pencarian dan Tampilkan data
 $keyword = $_GET['keyword'] ?? '';
-$bayiModel = new BayiModel();
+$bayiModel = new Bayi();
 if ($keyword !== '') {
     $dataBayi = $bayiModel->search($keyword);
 } else {

@@ -1,15 +1,15 @@
 <?php
 require_once 'config/Database.php';
-require_once 'models/Model.php';
+require_once 'models/balita.php';
 
-$model = new BayiModel();
+$model = new Bayi();
 
 // Cek apakah ada parameter id
 if (isset($_GET['id'])) {
     $row = $model->getBayiById((int)$_GET['id']);
     $dataBayi = $row ? [$row] : [];
 } else {
-    $dataBayi = $model->getAllBayi();
+    $dataBayi = $model->tampil_data();
 }
 ?>
 <!DOCTYPE html>
@@ -36,7 +36,7 @@ if (isset($_GET['id'])) {
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <?php foreach ($dataBayi as $row): ?>
                     <?php
-                        $bayi = new BayiModel();
+                        $bayi = new Bayi();
                         $bayi->setId($row['id']);
                         $bayi->setNama($row['nama']);
                         $bayi->setTinggi($row['tinggi']);

@@ -2,7 +2,7 @@
 /**
  * Model sederhana untuk mengelola data bayi/balita
  */
-class BayiModel
+class Bayi
 {
     private $conn;
     private $id;
