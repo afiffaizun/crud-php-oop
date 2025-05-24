@@ -1,10 +1,21 @@
 <?php
 /**
+ * Class induk Model untuk koneksi database
+ */
+class Model
+{
+    protected $conn;
+    public function __construct()
+    {
+        $this->conn = Database::getInstance()->getConnection();
+    }
+}
+
+/**
  * Model sederhana untuk mengelola data bayi/balita
  */
-class Bayi
+class Bayi extends Model
 {
-    private $conn;
     private $id;
     private $nama;
     private $tinggi;
@@ -15,11 +26,6 @@ class Bayi
     private $catatan;
     
     private const TABLE = 'databayi';
-
-    public function __construct()
-    {
-        $this->conn = Database::getInstance()->getConnection();
-    }
 
     // Ambil semua data bayi
     public function tampil_data()
