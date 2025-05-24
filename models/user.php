@@ -26,7 +26,6 @@ class Pengguna
             // Periksa password (di masa depan, gunakan password_hash dan password_verify)
             if ($this->password === $row['password']) {
                 // Set data session
-                $this->startSession();
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['username'] = $row['username'];
                 return true;
@@ -38,20 +37,11 @@ class Pengguna
 
     public function logout()
     {
-        $this->startSession();
-        $_SESSION = array();
-        session_destroy();
-    }
-
-    /**
-     * Memulai session jika belum dimulai
-     */
-    private function startSession()
-    {
+        // Pastikan session sudah dimulai sebelum mengakses/mengubah $_SESSION
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+        $_SESSION = array();
+        session_destroy();
     }
-
-
 }
