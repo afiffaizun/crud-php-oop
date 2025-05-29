@@ -148,7 +148,7 @@ if ($keyword !== '') {
                                     <td><?= htmlspecialchars($bayi['riwayat']) ?></td>
                                     <td><?= htmlspecialchars($bayi['catatan']) ?></td>
                                     <td class="px-4">
-                                        <a href="../data.php?id=<?= $bayi['id'] ?>" class="btn btn-info btn-sm text-white">
+                                        <a href="data.php?id=<?= $bayi['id'] ?>" class="btn btn-info btn-sm text-white">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                         <a href="edit_bayi.php?id=<?= $bayi['id'] ?>" class="btn btn-warning btn-sm">
