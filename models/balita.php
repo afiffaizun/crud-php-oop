@@ -1,19 +1,6 @@
 <?php
-/**
- * Class induk Model untuk koneksi database
- */
-class Model
-{
-    protected $conn;
-    public function __construct()
-    {
-        $this->conn = Database::getInstance()->getConnection();
-    }
-}
+require_once __DIR__ . '/model.php';
 
-/**
- * Model sederhana untuk mengelola data bayi/balita
- */
 class Bayi extends Model
 {
     private $id;

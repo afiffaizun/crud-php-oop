@@ -1,15 +1,11 @@
 <?php
-class Pengguna
+require_once __DIR__ . '/model.php';
+
+class Pengguna extends Model
 {
     private $username;
     private $password;
-    private $conn;
     const TABLE = 'pengguna'; // Ganti 'users' sesuai nama tabel user Anda
-
-    public function __construct()
-    {
-        $this->conn = Database::getInstance()->getConnection();
-    }
 
     public function login($username, $password)
     {
