@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once 'config/Database.php';
-require_once 'models/balita.php';
+require_once '../config/database.php';
+require_once '../models/balita.php';
 
 $model = new Bayi();
 
@@ -25,7 +25,7 @@ if (isset($_GET['id'])) {
     <div class="w-full max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg">
         <div class="flex items-center justify-between mb-6">
             <h1 class="text-2xl font-semibold text-gray-800">Data Bayi</h1>
-            <a href="views/dashboard.php" class="px-3 py-1.5 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">&larr; Kembali</a>
+            <a href="dashboard.php" class="px-3 py-1.5 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">&larr; Kembali</a>
         </div>
         <?php if (empty($dataBayi)): ?>
             <div class="text-center py-10 text-gray-400">Tidak ada data bayi.</div>

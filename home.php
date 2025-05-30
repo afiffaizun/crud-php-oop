@@ -23,7 +23,7 @@
 
 <body>
     <?php
-    require_once __DIR__ . '/config/Database.php';
+    require_once __DIR__ . '/config/database.php';
     require_once __DIR__ . '/models/user.php';
     session_start();
 

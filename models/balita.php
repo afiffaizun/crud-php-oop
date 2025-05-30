@@ -1,7 +1,5 @@
 <?php
-require_once __DIR__ . '/model.php';
-
-class Bayi extends Model
+class Bayi
 {
     private $id;
     private $nama;
@@ -13,6 +11,13 @@ class Bayi extends Model
     private $catatan;
     
     private const TABLE = 'databayi';
+    private $conn;
+
+    public function __construct()
+    {
+        require_once dirname(__DIR__) . '/config/database.php';
+        $this->conn = Database::getInstance()->getConnection();
+    }
 
     // Ambil semua data bayi
     public function tampil_data()

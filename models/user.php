@@ -1,11 +1,23 @@
 <?php
-require_once __DIR__ . '/model.php';
+require_once dirname(__DIR__) . '/config/database.php';
+
+// Class induk untuk koneksi database
+class Model
+{
+    protected $conn;
+    public function __construct()
+    {
+        $this->conn = Database::getInstance()->getConnection();
+    }
+}
 
 class Pengguna extends Model
 {
     private $username;
     private $password;
     const TABLE = 'pengguna'; // Ganti 'users' sesuai nama tabel user Anda
+
+    // Tidak perlu constructor, gunakan milik BaseModel
 
     public function login($username, $password)
     {
