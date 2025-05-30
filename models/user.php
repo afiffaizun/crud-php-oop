@@ -1,5 +1,4 @@
 <?php
-require_once dirname(__DIR__) . '/config/database.php';
 
 // Class induk untuk koneksi database
 class Model
@@ -7,7 +6,9 @@ class Model
     protected $conn;
     public function __construct()
     {
-        $this->conn = Database::getInstance()->getConnection();
+        require_once dirname(__DIR__) . '/config/database.php';
+        $db = new Database();
+        $this->conn = $db->getConnection();
     }
 }
 

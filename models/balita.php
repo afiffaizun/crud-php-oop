@@ -15,10 +15,12 @@ class Bayi
 
     public function __construct()
     {
-        require_once dirname(__DIR__) . '/config/database.php';
-        $this->conn = Database::getInstance()->getConnection();
+        require_once dirname(__DIR__) . '/config/Database.php';
+        $db = new Database();
+        $this->conn = $db->getConnection();
     }
 
+    
     // Ambil semua data bayi
     public function tampil_data()
     {
