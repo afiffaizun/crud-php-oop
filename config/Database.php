@@ -5,9 +5,7 @@ class Database {
     private $username = "root";
     private $password = "";
     public $conn;
-
-    public function __construct() {}
-
+    
     public function getConnection() {
         if ($this->conn === null) {
             try {

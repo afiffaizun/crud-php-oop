@@ -1,6 +1,5 @@
 <?php
 
-// Class induk untuk koneksi database
 class Model
 {
     protected $conn;

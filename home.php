@@ -45,7 +45,7 @@
         $userModel = new Pengguna();
         $userModel->logout();
         setFlashMessage('success', 'Berhasil logout!');
-        header('Location: home.php');
+        header(header: 'Location: home.php');
         exit;
     }
 
@@ -71,6 +71,7 @@
             exit;
         }
     }
+    
     ?>    <?php if (isset($flashMessage)): ?>
         <div
             class="fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg backdrop-blur-sm <?= $flashMessage['type'] === 'success' ? 'bg-green-500/90' : 'bg-red-500/90' ?> text-white font-medium animate-fade-in-down">
