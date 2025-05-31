@@ -9,13 +9,15 @@ class Bayi
     private $tanggalLahir;
     private $riwayat;
     private $catatan;
-    
+
+    private $user_id;
+
     private const TABLE = 'databayi';
     private $conn;
 
     public function __construct()
     {
-        require_once dirname(__DIR__) . '/config/Database.php';
+        require_once dirname(__DIR__) . '/config/database.php';
         $db = new Database();
         $this->conn = $db->getConnection();
     }
@@ -24,6 +26,7 @@ class Bayi
     // Ambil semua data bayi
     public function tampil_data()
     {
+        // Menampilkan semua data bayi tanpa filter user_id
         $query = "SELECT * FROM " . self::TABLE . " ORDER BY id DESC";
         $result = $this->conn->query($query);
         $data = [];
@@ -38,6 +41,7 @@ class Bayi
     // Ambil data bayi berdasarkan ID
     public function getBayiById($id)
     {
+        if (!isset($_SESSION)) session_start();
         $query = "SELECT * FROM " . self::TABLE . " WHERE id = ? LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $id);
@@ -50,9 +54,12 @@ class Bayi
     public function tambah()
     {
         if (empty($this->nama) || empty($this->jenisKelamin)) return false;
-        $query = "INSERT INTO " . self::TABLE . " (nama, tinggi, berat, jenisKelamin, tanggalLahir, riwayat, catatan) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        if (!isset($_SESSION)) session_start();
+        $user_id = $_SESSION['user_id'] ?? null;
+        if (!$user_id) return false;
+        $query = "INSERT INTO " . self::TABLE . " (nama, tinggi, berat, jenisKelamin, tanggalLahir, riwayat, catatan, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("sddssss", $this->nama, $this->tinggi, $this->berat, $this->jenisKelamin, $this->tanggalLahir, $this->riwayat, $this->catatan);
+        $stmt->bind_param("sddssssi", $this->nama, $this->tinggi, $this->berat, $this->jenisKelamin, $this->tanggalLahir, $this->riwayat, $this->catatan, $user_id);
         return $stmt->execute();
     }
 
@@ -110,7 +117,9 @@ class Bayi
     public function setRiwayat($riwayat) { $this->riwayat = $riwayat; }
     public function getCatatan() { return $this->catatan; }
     public function setCatatan($catatan) { $this->catatan = $catatan; }
-   
+
+    public function getUserId() { return $this->user_id; }
+    public function setUserId($user_id) { $this->user_id = (int)$user_id; }
 }
 
 

@@ -29,10 +29,9 @@ class Pengguna extends Model
 
         $result = $stmt->get_result();
         if ($row = $result->fetch_assoc()) {
-            // Periksa password (di masa depan, gunakan password_hash dan password_verify)
             if ($this->password === $row['password']) {
-                // Set data session
-                $_SESSION['user_id'] = $row['id'];
+                // Set data session, gunakan user_id sebagai primary key
+                $_SESSION['user_id'] = $row['user_id'];
                 $_SESSION['username'] = $row['username'];
                 return true;
             }
@@ -43,7 +42,6 @@ class Pengguna extends Model
 
     public function logout()
     {
-        // Pastikan session sudah dimulai sebelum mengakses/mengubah $_SESSION
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }

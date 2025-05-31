@@ -4,14 +4,13 @@ require_once '../config/database.php';
 require_once '../models/balita.php';
 
 $model = new Bayi();
-
-// Cek apakah ada parameter id
 if (isset($_GET['id'])) {
     $row = $model->getBayiById((int)$_GET['id']);
     $dataBayi = $row ? [$row] : [];
 } else {
     $dataBayi = $model->tampil_data();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -21,16 +20,33 @@ if (isset($_GET['id'])) {
     <title>Data Bayi</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 font-sans min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg">
-        <div class="flex items-center justify-between mb-6">
-            <h1 class="text-2xl font-semibold text-gray-800">Data Bayi</h1>
-            <a href="dashboard.php" class="px-3 py-1.5 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">&larr; Kembali</a>
+<body class="bg-gray-100 font-sans min-h-screen p-6">
+    <div class="max-w-5xl mx-auto">
+        <!-- Header Section -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <h1 class="text-3xl font-bold text-blue-800">Data Bayi</h1>
+                <a href="dashboard.php" class="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Kembali
+                </a>
+            </div>
         </div>
+
+        <!-- Content Section -->
         <?php if (empty($dataBayi)): ?>
-            <div class="text-center py-10 text-gray-400">Tidak ada data bayi.</div>
+            <div class="bg-white rounded-xl shadow-md p-12">
+                <div class="text-center">
+                    <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                    </svg>
+                    <p class="text-xl text-gray-500">Tidak ada data bayi.</p>
+                </div>
+            </div>
         <?php else: ?>
-            <div class="space-y-5">
+            <div class="grid md:grid-cols-2 gap-6">
                 <?php foreach ($dataBayi as $row): ?>
                     <?php
                         $bayi = new Bayi();
@@ -42,32 +58,63 @@ if (isset($_GET['id'])) {
                         $bayi->setTanggalLahir($row['tanggalLahir']);
                         $bayi->setRiwayat($row['riwayat']);
                         $bayi->setCatatan($row['catatan']);
+                        $bayi->setUserId($row['user_id']);
                     ?>
-                    <div class="border border-gray-200 rounded-lg p-5 shadow-sm hover:shadow-md transition bg-gray-50">
-                        <div class="flex items-center justify-between mb-3">
-                            <h2 class="text-lg font-bold text-blue-700"><?= htmlspecialchars($bayi->getNama()) ?></h2>
+                    
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                        <!-- Header Card -->
+                        <div class="bg-blue-50 p-4 border-b border-blue-100">
+                            <h2 class="text-xl font-bold text-blue-800"><?= htmlspecialchars($bayi->getNama()) ?></h2>
                         </div>
-                        <div class="grid grid-cols-2 gap-4 mb-2">
-                            <div>
-                                <div class="text-xs text-gray-500">Tinggi</div>
-                                <div class="text-base font-medium text-gray-700"><?= htmlspecialchars($bayi->getTinggi()) ?> cm</div>
+
+                        <!-- Body Card -->
+                        <div class="p-4 space-y-4">
+                            <!-- Measurements -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-gray-50 p-3 rounded-lg">
+                                    <div class="text-sm text-gray-600">Tinggi Badan</div>
+                                    <div class="text-lg font-semibold text-blue-700"><?= htmlspecialchars($bayi->getTinggi()) ?> cm</div>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded-lg">
+                                    <div class="text-sm text-gray-600">Berat Badan</div>
+                                    <div class="text-lg font-semibold text-blue-700"><?= htmlspecialchars($bayi->getBerat()) ?> kg</div>
+                                </div>
                             </div>
-                            <div>
-                                <div class="text-xs text-gray-500">Berat</div>
-                                <div class="text-base font-medium text-gray-700"><?= htmlspecialchars($bayi->getBerat()) ?> kg</div>
+
+                            <!-- Basic Info -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-gray-50 p-3 rounded-lg">
+                                    <div class="text-sm text-gray-600">Jenis Kelamin</div>
+                                    <div class="font-medium text-gray-800"><?= htmlspecialchars($bayi->getJenisKelamin()) ?></div>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded-lg">
+                                    <div class="text-sm text-gray-600">Tanggal Lahir</div>
+                                    <div class="font-medium text-gray-800"><?= htmlspecialchars($bayi->getTanggalLahir()) ?></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex flex-wrap gap-4 text-sm text-gray-600 mb-2">
-                            <div><span class="font-medium">Jenis Kelamin:</span> <?= htmlspecialchars($bayi->getJenisKelamin()) ?></div>
-                            <div><span class="font-medium">Tanggal Lahir:</span> <?= htmlspecialchars($bayi->getTanggalLahir()) ?></div>
-                        </div>
-                        <div class="mt-2">
-                            <div class="mb-1 font-medium text-gray-700">Riwayat:</div>
-                            <div class="bg-white rounded p-2 text-xs text-gray-700 border border-gray-100"><?= nl2br(htmlspecialchars($bayi->getRiwayat())) ?></div>
-                        </div>
-                        <div class="mt-2">
-                            <div class="mb-1 font-medium text-gray-700">Catatan:</div>
-                            <div class="bg-white rounded p-2 text-xs text-gray-700 border border-gray-100"><?= nl2br(htmlspecialchars($bayi->getCatatan())) ?></div>
+
+                            <!-- Medical History -->
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="text-sm font-medium text-gray-600 mb-1">Riwayat Kesehatan</div>
+                                    <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-800 min-h-[60px]">
+                                        <?= nl2br(htmlspecialchars($bayi->getRiwayat())) ?: '<span class="text-gray-400">Tidak ada riwayat</span>' ?>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="text-sm font-medium text-gray-600 mb-1">Catatan</div>
+                                    <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-800 min-h-[60px]">
+                                        <?= nl2br(htmlspecialchars($bayi->getCatatan())) ?: '<span class="text-gray-400">Tidak ada catatan</span>' ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Admin Info -->
+                            <div class="border-t pt-3 mt-3">
+                                <div class="text-xs text-gray-500">ID Admin Penginput</div>
+                                <div class="text-sm font-medium text-gray-700"><?= htmlspecialchars($bayi->getUserId()) ?></div>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>

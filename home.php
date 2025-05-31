@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -74,36 +73,36 @@
     
     ?>    <?php if (isset($flashMessage)): ?>
         <div
-            class="fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg backdrop-blur-sm <?= $flashMessage['type'] === 'success' ? 'bg-green-500/90' : 'bg-red-500/90' ?> text-white font-medium animate-fade-in-down">
+            class="fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg backdrop-blur-sm <?= $flashMessage['type'] === 'success' ? 'bg-blue-500/90' : 'bg-red-500/90' ?> text-white font-medium animate-fade-in-down">
             <?= $flashMessage['message'] ?>
         </div>
-    <?php endif; ?><form action="" method="POST" class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl text-sm p-8 py-12 w-96 mx-4">
+    <?php endif; ?><form action="" method="POST" class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl text-sm p-8 py-12 w-96 mx-4 border border-blue-100">
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 class="text-3xl font-semibold bg-gradient-to-r from-blue-700 to-blue-400 bg-clip-text text-transparent">
                 Selamat Datang
             </h1>
-            <p class="text-gray-500 mt-2">Silahkan login untuk melanjutkan</p>
+            <p class="text-blue-700 mt-2">Silahkan login untuk melanjutkan</p>
         </div>
 
         <div class="space-y-6">
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Username</label>
+                <label class="block text-blue-800 font-medium mb-2">Username</label>
                 <div class="relative">
                     <input type="text" name="username" placeholder="Masukkan username..." required
-                        class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all outline-none text-gray-600 placeholder-gray-400">
+                        class="w-full px-4 py-3 rounded-lg border border-blue-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all outline-none text-blue-800 placeholder-blue-400">
                 </div>
             </div>
 
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Password</label>
+                <label class="block text-blue-800 font-medium mb-2">Password</label>
                 <div class="relative">
                     <input type="password" name="password" placeholder="Masukkan password..." required
-                        class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all outline-none text-gray-600 placeholder-gray-400">
+                        class="w-full px-4 py-3 rounded-lg border border-blue-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all outline-none text-blue-800 placeholder-blue-400">
                 </div>
             </div>
 
             <button type="submit"
-                class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-medium hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
+                class="w-full bg-gradient-to-r from-blue-700 to-blue-400 text-white py-3 rounded-lg font-medium hover:bg-blue-800 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
                 Login
             </button>
         </div>

@@ -81,7 +81,9 @@ if ($keyword !== '') {
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">Monitoring Balita</a>
+            <span class="navbar-brand fw-bold">
+                ID Admin: <?= htmlspecialchars($_SESSION['user_id']) ?>
+            </span>
             <div class="d-flex">
                 <a href="../home.php?logout=1" class="btn btn-outline-danger">
                     <i class="bi bi-box-arrow-right"></i> Logout
