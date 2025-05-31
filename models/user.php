@@ -17,8 +17,6 @@ class Pengguna extends Model
     private $password;
     const TABLE = 'pengguna'; // Ganti 'users' sesuai nama tabel user Anda
 
-    // Tidak perlu constructor, gunakan milik BaseModel
-
     public function login($username, $password)
     {
         $this->username = $username;

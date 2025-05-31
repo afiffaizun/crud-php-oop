@@ -94,7 +94,7 @@ if ($keyword !== '') {
         <div class="row mb-4">
             <div class="col-md-6">
                 <h2 class="fw-bold mb-0">Data Balita</h2>
-                <p class="text-muted">Manajemen data balita dan perkembangannya</p>
+               
             </div>
             <div class="col-md-6 text-md-end">
                 <a href="tambah_bayi.php" class="btn btn-primary">
