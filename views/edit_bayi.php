@@ -16,7 +16,7 @@ $alert = null;
 if (!isset($_GET['id'])) {
     $alert = ['type' => 'danger', 'message' => 'ID tidak ditemukan'];
 } else {
-    $id = (int)$_GET['id'];
+    $id = (int) $_GET['id'];
     $dataBayi = $bayiModel->getBayiById($id);
     if (!$dataBayi) {
         $alert = ['type' => 'danger', 'message' => 'Data bayi tidak ditemukan'];
@@ -72,7 +72,7 @@ if (isset($dataBayi) && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label class="col-sm-3 col-form-label">Nama</label>
                 <div class="col-sm-6">
                     <input type="text" name="nama" class="form-control" placeholder="Masukkan nama..."
-                        value="<?= htmlspecialchars($dataBayi['nama']) ?>">
+                        value="<?= htmlspecialchars($dataBayi['nama'] ?? '') ?>">
                 </div>
             </div>
 
@@ -116,7 +116,7 @@ if (isset($dataBayi) && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label class="col-sm-3 col-form-label">Riwayat Penyakit</label>
                 <div class="col-sm-6">
                     <input type="text" name="riwayat" class="form-control" placeholder="Riwayat penyakit..."
-                        value="<?= htmlspecialchars($dataBayi['riwayat']) ?>">
+                        value="<?= htmlspecialchars($dataBayi['riwayat'] ?? '') ?>">
                 </div>
             </div>
 
@@ -124,7 +124,7 @@ if (isset($dataBayi) && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label class="col-sm-3 col-form-label">Catatan</label>
                 <div class="col-sm-6">
                     <input type="text" name="catatan" class="form-control" placeholder="Catatan..."
-                        value="<?= htmlspecialchars($dataBayi['catatan']) ?>">
+                        value="<?= htmlspecialchars($dataBayi['catatan'] ?? '') ?>">
                 </div>
             </div>
 

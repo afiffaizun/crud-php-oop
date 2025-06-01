@@ -1,13 +1,20 @@
 <?php
 require_once '../config/database.php';
 require_once '../models/balita.php';
+require_once '../models/orangtua.php';
 session_start();
 
-// Auth check (optional, hapus jika tidak ingin login)
+// Auth check
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../home.php');
     exit;
 }
+
+// Initialize alert variable
+$alert = null;
+
+$orangTuaModel = new OrangTua();
+$orangTuaList = $orangTuaModel->tampil_orangtua();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bayiModel = new Bayi();
@@ -18,12 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bayiModel->setTanggalLahir($_POST['tanggalLahir']);
     $bayiModel->setRiwayat($_POST['riwayat'] ?? '');
     $bayiModel->setCatatan($_POST['catatan'] ?? '');
-    
+    $bayiModel->setOrangTuaId($_POST['orang_tua_id']);
+
     if ($bayiModel->tambah()) {
-        header('Location: dashboard.php');
-        exit;
+        // Use consistent alert pattern for success message
+        $alert = ['type' => 'success', 'message' => 'Data bayi berhasil ditambahkan'];
     } else {
-        $errorMessage = 'Gagal menambah data bayi';
+        $alert = ['type' => 'danger', 'message' => 'Gagal menambah data bayi'];
     }
 }
 ?>
@@ -41,10 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <div class="container my-5">
-        <?php if (isset($errorMessage)): ?>
-            <div class="alert alert-danger alert-dismissible fade show"
-                role="alert">
-                <?= $errorMessage ?>
+        <?php if ($alert): ?>
+            <div class="alert alert-<?= $alert['type'] ?> alert-dismissible fade show" role="alert">
+                <?= $alert['message'] ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
@@ -53,18 +60,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <br>
 
         <form action="" method="post">
-            
+
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Nama</label>
+                <label for="nama" class="col-sm-3 col-form-label">Nama</label>
                 <div class="col-sm-6">
-                    <input type="text" name="nama" class="form-control" placeholder="Masukkan nama..." required>
+                    <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan nama..."
+                        required>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                <label for="orang_tua_id" class="col-sm-3 col-form-label">Orang Tua</label>
                 <div class="col-sm-6">
-                    <select name="jenisKelamin" class="form-control" required>
+                    <select name="orang_tua_id" id="orang_tua_id" class="form-control" required>
+                        <option value="">-- Pilih Orang Tua --</option>
+                        <?php foreach ($orangTuaList as $orangTua): ?>
+                            <option value="<?= $orangTua['orangtua_id'] ?>"><?= htmlspecialchars($orangTua['nama']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="jenisKelamin" class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                <div class="col-sm-6">
+                    <select name="jenisKelamin" id="jenisKelamin" class="form-control" required>
                         <option value="Laki-Laki">Laki-Laki</option>
                         <option value="Perempuan">Perempuan</option>
                     </select>
@@ -72,39 +93,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Tinggi Badan (cm)</label>
+                <label for="tinggi" class="col-sm-3 col-form-label">Tinggi Badan (cm)</label>
                 <div class="col-sm-6">
-                    <input type="number" name="tinggi" class="form-control" placeholder="Tinggi badan..." step="0.01"
-                        required>
+                    <input type="number" name="tinggi" id="tinggi" class="form-control" placeholder="Tinggi badan..."
+                        step="0.01" required>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Berat Badan (kg)</label>
+                <label for="berat" class="col-sm-3 col-form-label">Berat Badan (kg)</label>
                 <div class="col-sm-6">
-                    <input type="number" name="berat" class="form-control" placeholder="Berat badan..." step="0.01"
-                        required>
+                    <input type="number" name="berat" id="berat" class="form-control" placeholder="Berat badan..."
+                        step="0.01" required>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                <label for="tanggalLahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
                 <div class="col-sm-6">
-                    <input type="date" name="tanggalLahir" class="form-control" required>
+                    <input type="date" name="tanggalLahir" id="tanggalLahir" class="form-control" required>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Riwayat Penyakit</label>
+                <label for="riwayat" class="col-sm-3 col-form-label">Riwayat Penyakit</label>
                 <div class="col-sm-6">
-                    <input type="text" name="riwayat" class="form-control" placeholder="Riwayat penyakit...">
+                    <input type="text" name="riwayat" id="riwayat" class="form-control"
+                        placeholder="Riwayat penyakit...">
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Catatan</label>
+                <label for="catatan" class="col-sm-3 col-form-label">Catatan</label>
                 <div class="col-sm-6">
-                    <input type="text" name="catatan" class="form-control" placeholder="Catatan...">
+                    <input type="text" name="catatan" id="catatan" class="form-control" placeholder="Catatan...">
                 </div>
             </div>
 
@@ -120,6 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </body>
 
 </html>

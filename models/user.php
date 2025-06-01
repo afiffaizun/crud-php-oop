@@ -1,26 +1,24 @@
 <?php
 
-class Model
+class Pengguna
 {
-    protected $conn;
+    private $conn;
+    private $username;
+    private $password;
+    const TABLE = 'pengguna';
+
     public function __construct()
     {
         require_once dirname(__DIR__) . '/config/database.php';
         $db = new Database();
         $this->conn = $db->getConnection();
     }
-}
-
-class Pengguna extends Model
-{
-    private $username;
-    private $password;
-    const TABLE = 'pengguna'; // Ganti 'users' sesuai nama tabel user Anda
 
     public function login($username, $password)
     {
-        $this->username = $username;
-        $this->password = $password;
+        // Sanitize input
+        $this->username = $this->conn->real_escape_string($username);
+        $this->password = $password; // Consider using password_hash/password_verify
 
         $query = "SELECT * FROM " . self::TABLE . " WHERE username = ? LIMIT 1";
         $stmt = $this->conn->prepare($query);
@@ -29,8 +27,12 @@ class Pengguna extends Model
 
         $result = $stmt->get_result();
         if ($row = $result->fetch_assoc()) {
+            // In a production environment, use password_verify instead of direct comparison
             if ($this->password === $row['password']) {
-                // Set data session, gunakan user_id sebagai primary key
+                // Set session data, use user_id as primary key
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
                 $_SESSION['user_id'] = $row['user_id'];
                 $_SESSION['username'] = $row['username'];
                 return true;
@@ -47,5 +49,8 @@ class Pengguna extends Model
         }
         $_SESSION = array();
         session_destroy();
+
+        // Return true to indicate successful logout
+        return true;
     }
 }

@@ -1,27 +1,34 @@
 <?php
-class Database {
+class Database
+{
     private $host = "localhost:3307";
     private $db_name = "db_databayi";
     private $username = "root";
     private $password = "";
-    public $conn;
-    
-    public function getConnection() {
-        if ($this->conn === null) {
+    private static $conn = null;
+
+
+    public function getConnection()
+    {
+        if (self::$conn === null) {
             try {
-                $this->conn = new mysqli(
+                self::$conn = new mysqli(
                     $this->host,
                     $this->username,
                     $this->password,
                     $this->db_name
                 );
-                if ($this->conn->connect_error) {
-                    die("Koneksi gagal: " . $this->conn->connect_error);
+
+                // Set character set to UTF-8
+                self::$conn->set_charset("utf8");
+
+                if (self::$conn->connect_error) {
+                    throw new Exception("Koneksi gagal: " . self::$conn->connect_error);
                 }
             } catch (Exception $exception) {
                 die("Koneksi gagal: " . $exception->getMessage());
             }
         }
-        return $this->conn;
+        return self::$conn;
     }
 }
