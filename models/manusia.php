@@ -4,8 +4,8 @@ require_once dirname(__DIR__) . '/config/database.php';
 class Manusia
 {
     protected $conn;
-    protected $nama;        // Changed from private to protected
-    protected $jenisKelamin; // Changed from private to protected
+    protected $nama;       
+    protected $jenisKelamin; 
 
     public function __construct()
     {

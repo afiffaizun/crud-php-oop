@@ -7,12 +7,11 @@ class Bayi extends Manusia
     private $tinggi;
     private $berat;
     private $tanggalLahir;
-    private $orangTuaId;  // Changed variable name to match setter/getter
+    private $orangTuaId;  
     private $riwayat;
     private $catatan;
     private const TABLE = 'databayi';
 
-    // Other methods remain unchanged...
 
     // Tambah data bayi
     public function tambah()
