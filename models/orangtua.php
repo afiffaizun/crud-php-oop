@@ -3,7 +3,6 @@ require_once 'manusia.php';
 
 class OrangTua extends Manusia
 {
-    private $id;
     private $alamat;
     private $telepon;
     private const TABLE = 'orangtua';
@@ -52,16 +51,6 @@ class OrangTua extends Manusia
         }
 
         return null;
-    }
-
-    public function setId($id)
-    {
-        $this->id = (int) $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function setAlamat($alamat)

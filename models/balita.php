@@ -3,7 +3,6 @@ require_once 'manusia.php';
 
 class Bayi extends Manusia
 {
-    private $id;
     private $tinggi;
     private $berat;
     private $tanggalLahir;
@@ -19,7 +18,6 @@ class Bayi extends Manusia
         $query = "INSERT INTO " . self::TABLE . " (nama, jenisKelamin, tinggi, berat, tanggalLahir, riwayat, catatan, orang_tua_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
 
-        // Use getter methods instead of direct property access
         $nama = $this->getNama();
         $jenisKelamin = $this->getJenisKelamin();
 
@@ -126,61 +124,31 @@ class Bayi extends Manusia
         return $data;
     }
 
-    // Getter & Setter
-    public function getId()
-    {
-        return $this->id;
-    }
-    public function setId($id)
-    {
-        $this->id = (int) $id;
-    }
-    public function getTinggi()
-    {
-        return $this->tinggi;
-    }
     public function setTinggi($tinggi)
     {
         $this->tinggi = (float) $tinggi;
     }
-    public function getBerat()
-    {
-        return $this->berat;
-    }
+   
     public function setBerat($berat)
     {
         $this->berat = (float) $berat;
     }
-    public function getTanggalLahir()
-    {
-        return $this->tanggalLahir;
-    }
+    
     public function setTanggalLahir($tanggalLahir)
     {
         $this->tanggalLahir = $tanggalLahir;
     }
-    public function getRiwayat()
-    {
-        return $this->riwayat;
-    }
+    
     public function setRiwayat($riwayat)
     {
         $this->riwayat = $riwayat;
     }
-    public function getCatatan()
-    {
-        return $this->catatan;
-    }
+    
     public function setCatatan($catatan)
     {
         $this->catatan = $catatan;
     }
-
-    public function getOrangTuaId()
-    {
-        return $this->orangTuaId;
-    }
-
+    
     public function setOrangTuaId($orangTuaId)
     {
         $this->orangTuaId = (int) $orangTuaId;
